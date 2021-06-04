@@ -31,11 +31,6 @@ const links = [];
 const doubledLinks = [];
 let transactionsScanned = 0;
 
-// Write stream, we let autoclose on to be fault tolerant in case graymass will restrict access
-const file = fs.createWriteStream('doubleLinks.txt', {
-  flags: 'w',
-});
-
 const yupCreatorAccount = 'yupcreators1';
 let last_action = (await eosApi.getActions(yupCreatorAccount, -1, -1)).actions[0].account_action_seq;
 // scan 16000 transactions ( 80 x 2000 )
@@ -61,6 +56,10 @@ for (let index = 0; index < 2000; index++) {
   // See live on running
   console.log(transactionsScanned);
   console.log(doubledLinks);
+  // Write stream truncate, we let autoclose on to be fault tolerant in case graymass will restrict access
+  const file = fs.createWriteStream('doubleLinks.txt', {
+    flags: 'w',
+  });
   // Rewrite the file after every 80 transactions in case graymass node restricts the requests
   file.write(`Transaction Scanned: ${transactionsScanned}\n`);
   file.write(`Number of duplicate posts: ${doubledLinks.length}\n\n`);
