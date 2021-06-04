@@ -18,4 +18,4 @@ node index.js
 
 Scan can take a long time
 
-After scan check `doubleLinks.txt` and `suspects.txt` for result.
+After scan check `doubleLinks.txt`.
